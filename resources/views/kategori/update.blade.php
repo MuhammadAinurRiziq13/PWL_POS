@@ -11,7 +11,7 @@
     <div class="container">
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Buat kategori baru</h3>
+                <h3 class="card-title">Edit kategori</h3>
             </div>
 
             <form method="post" action="/kategori/update_save/{{ $data->kategori_id }}">
@@ -21,11 +21,13 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="kodeKategori">Kode Kategori</label>
-                        <input type="text" class="form-control" id="kodeKategori" name="kodeKategori" placeholder="KAT001" value="{{ $data->kategori_kode }}">
+                        <input type="text" class="form-control" id="kodeKategori" name="kodeKategori" placeholder="KAT001" 
+                        value="{{ $data->kategori_kode }}">
                     </div>
                     <div class="form-group">
                         <label for="namaKategori">Nama Kategori</label>
-                        <input type="text" class="form-control" id="namaKategori" name="namaKategori" placeholder="Elektronik" value="{{ $data->kategori_nama }}">
+                        <input type="text" class="form-control" id="namaKategori" name="namaKategori" placeholder="Elektronik" 
+                        value="{{ $data->kategori_nama }}">
                     </div>
                 </div>
 
@@ -35,6 +37,5 @@
 
             </form>
         </div>
-
     </div>
 @endsection
