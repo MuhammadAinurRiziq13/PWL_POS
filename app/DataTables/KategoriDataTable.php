@@ -37,7 +37,8 @@ class KategoriDataTable extends DataTable
      */
     public function query(KategoriModel $model): QueryBuilder
     {
-        return $model->newQuery();
+        // return $model->newQuery();
+        return $model->newQuery()->orderBy('kategori_id', 'asc');
     }
 
     /**

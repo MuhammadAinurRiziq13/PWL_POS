@@ -339,6 +339,11 @@ return [
             'icon' => 'fas fa-fw fa-list',
         ],
         [
+            'text' => 'User',
+            'url' => '/m_user',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
             'text' => 'multilevel',
             'icon' => 'fas fa-fw fa-share',
             'submenu' => [
