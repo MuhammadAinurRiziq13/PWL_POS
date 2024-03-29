@@ -2,66 +2,99 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
+use App\Models\LevelModel;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $user = UserModel::with('level')->get();
-        return view('user', ['data' => $user]);
+        //fungsi eloquent menampilkan data menggunakan pagination
+        $useri = UserModel::all(); // Mengambil semua isi tabel
+        return view('m_user.index', compact('useri'))->with('i');
     }
 
-    public function tambah()
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        return view('user_tambah');
+        $levels = LevelModel::all(); 
+        return view('m_user.create', compact('levels'));
     }
+    
 
-    public function tambah_simpan(Request $request){
-        UserModel::create([
-            'username' => $request->username,
-            'nama' => $request->nama,
-            'password' => Hash::make('$request->password'),
-            'level_id' => $request->level_id
-        ]);
-
-        return redirect('/user');
-    }
-
-    public function ubah($id){
-        $user = UserModel::find($id);
-        return view('user_ubah',['data' => $user]);
-    }
-
-    public function ubah_simpan($id, Request $request){
-        $user = UserModel::find($id);
-
-        $user->username = $request->username;
-        $user->nama = $request->nama;
-        $user->password = Hash::make('$request->password');
-        $user->level_id = $request->level_id;
-
-        $user->save();
-
-        return redirect('/user');
-    }
-
-    public function hapus($id)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(UserRequest $request)
     {
-        $user = UserModel::find($id);
-        $user->delete();
+        // retrived the validated input data 
+        $validated = $request->validated();
 
-        return redirect('/user');
+        // retrived a portion of the validated input data
+        $validated = $request->safe()->only(['username','nama','password']);
+        $validated = $request->safe()->except(['username','nama','password']);
+        
+        //fungsi eloquent untuk menambah data
+        UserModel::create($request->all());
+    
+        return redirect()->route('m_user.index')
+        ->with('success', 'user Berhasil Ditambahkan');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id, UserModel $useri)
+    {
+        $useri = UserModel::findOrFail($id);
+        return view('m_user.show', compact('useri'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $useri = UserModel::find($id);
+        return view('m_user.edit', compact('useri'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            
+            'username' => 'required',
+            'nama' => 'required',
+            'password' => 'required',
+            ]);
+
+        //fungsi eloquent untuk mengupdate data inputan kita
+        UserModel::find($id)->update($request->all());
+        
+        //jika data berhasil diupdate, akan kembali ke halaman utama
+        return redirect()->route('m_user.index')
+        ->with('success', 'Data Berhasil Diupdate');
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $useri= UserModel::findOrFail($id)->delete();
+        return \redirect()->route('m_user.index')
+
+        -> with('success', 'data Berhasil Dihapus');
     }
 }
-
-// tambah data user dengan eloquent model
-// $data = [
-//     'level_id' => 2,
-//     'username' => 'manager_tiga',
-//     'nama' => 'Manager 3',
-//     'password' => Hash::make('12345'),
-// ];
-// UserModel::create($data);

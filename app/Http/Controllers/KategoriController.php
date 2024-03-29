@@ -60,6 +60,7 @@ class KategoriController extends Controller
         $validated = $request->safe()->except(['kategori_kode','kategori_nama']);
 
         // store the proses
+        KategoriModel::create($request->all());
         return redirect('/kategori');
     }
 

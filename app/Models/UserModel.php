@@ -23,8 +23,8 @@ class UserModel extends Model
         'password',
     ];
 
-    public function level(): BelongsTo
-    {
-        return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
-    }
+    // public function level(): BelongsTo
+    // {
+    //     return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
+    // }
 }
