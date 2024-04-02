@@ -7,7 +7,7 @@
         <div class="card-tools"></div>
     </div>
     <div class="card-body">
-        @empty($level)
+        @empty($stok)
         <div class="alert alert-danger alert-dismissible">
             <h5><i class="icon fas fa-ban"></i> Kesalahan!</h5>
             Data yang Anda cari tidak ditemukan.
@@ -16,19 +16,27 @@
         <table class="table table-bordered table-striped table-hover table-sm">
             <tr>
                 <th>ID</th>
-                <td>{{ $level->level_id }}</td>
+                <td>{{ $stok->barang_id }}</td>
             </tr>
             <tr>
-                <th>level_kode</th>
-                <td>{{ $level->level_kode }}</td>
+                <th>Nama Barang</th>
+                <td>{{ $stok->barang->barang_nama }}</td>
             </tr>
             <tr>
-                <th>level_nama</th>
-                <td>{{ $level->level_nama }}</td>
+                <th>Pengelola</th>
+                <td>{{ $stok->user->nama }}</td>
+            </tr>
+            <tr>
+                <th>Stok Tanggal</th>
+                <td>{{ $stok->stok_tanggal }}</td>
+            </tr>
+            <tr>
+                <th>Stok Jumlah</th>
+                <td>{{ $stok->stok_jumlah }}</td>
             </tr>
         </table>
         @endempty
-        <a href="{{ url('level') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
+        <a href="{{ url('stok') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
     </div>
 </div>
 @endsection
@@ -38,3 +46,5 @@
 
 @push('js')
 @endpush
+
+
