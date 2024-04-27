@@ -82,7 +82,7 @@
                         searchable: true
                     },
                     {
-                        data: "category.kategori_nama",
+                        data: "kategori.kategori_nama",
                         className: "",
                         orderable: false,
                         searchable: false
