@@ -15,13 +15,42 @@ class BarangController extends Controller
 
     public function store(Request $request)
     {
-        $barang = BarangModel::create($request->all());
+        $request->validate([
+            'barang_kode' => 'required|string|min:3|unique:m_barang,barang_kode',
+            'barang_nama' => 'required|string|max:100',
+            'harga_beli' => 'required',
+            'harga_jual' => 'required',
+            'kategori_id' => 'required|integer',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $barang = barangModel::create([
+            'barang_kode' => $request->barang_kode,
+            'barang_nama' => $request->barang_nama,
+            'harga_beli' => $request->harga_beli,
+            'harga_jual' => $request->harga_jual,
+            'kategori_id' => $request->kategori_id,
+            'image' => $request->image->hashName(),
+        ]);
         return response()->json($barang, 201);
     }
 
-    public function show(BarangModel $barang)
+    public function show($id)
     {
-        return $barang;
+        $barang = BarangModel::find($id);
+
+        // Jika barang ditemukan
+        if ($barang) {
+            return response()->json([
+                'success' => true,
+                'barang' => $barang,
+            ], 200);
+        }
+
+        // Jika barang tidak ditemukan
+        return response()->json([
+            'success' => false,
+            'message' => 'barang not found.',
+        ], 404);
     }
 
     public function update(Request $request, BarangModel $barang)
