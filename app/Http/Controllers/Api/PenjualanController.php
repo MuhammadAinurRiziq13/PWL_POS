@@ -24,12 +24,10 @@ class PenjualanController extends Controller
             'penjualan_tanggal' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-
         // if validations fails
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
         // create penjualan
         $penjualan = PenjualanModel::create([
             'user_id' => $request->user_id,
@@ -38,7 +36,6 @@ class PenjualanController extends Controller
             'penjualan_tanggal' => $request->penjualan_tanggal,
             'image' => $request->image->hashName(),
         ]);
-
         // return response JSON user is created
         if ($penjualan) {
             return response()->json([
