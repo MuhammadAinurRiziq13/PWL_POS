@@ -58,6 +58,14 @@
                     <p>Transaksi Penjualan</p>
                 </a>
             </li>
+            <li class="nav-header">File Upload</li>
+            <li class="nav-item">
+                <a href="{{ url('/file-upload') }}"
+                    class="nav-link {{ $activeMenu == 'file-upload' ? 'active' : '' }} ">
+                    <i class="nav-icon fas fa-image"></i>
+                    <p>Upload Gambar</p>
+                </a>
+            </li>
         </ul>
     </nav>
 </div>

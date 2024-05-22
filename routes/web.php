@@ -115,11 +115,14 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
-Route::get('/file-upload', [FileUploadController::class, 'fileUpload']);
-Route::post('/file-upload', [FileUploadController::class, 'prosesFileUpload']);
+// Route::get('/file-upload', [FileUploadController::class, 'fileUpload']);
+// Route::post('/file-upload', [FileUploadController::class, 'prosesFileUpload']);
 
 Route::get('/file-upload-rename', [FileUploadRenameController::class, 'fileUpload']);
 Route::post('/file-upload-rename', [FileUploadRenameController::class, 'prosesFileUpload']);
+
+Route::get('/file-upload', [FileUploadController::class, 'fileUpload']);
+Route::post('/file-upload', [FileUploadController::class, 'prosesFileUpload']);
 
 
 
