@@ -8,8 +8,6 @@ class FileUploadController extends Controller
 {
     public function fileUpload()
     {
-        // return view('file-upload');
-        // return view('fileUpload');
         $breadcrumb = (object)[
             'title' => 'Tambah File Upload',
             'list' => ['Home', 'File Upload', 'Tambah']
@@ -27,6 +25,41 @@ class FileUploadController extends Controller
             'activeMenu' => $activeMenu
         ]);
     }
+
+    public function prosesFileUpload(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string',
+            'gambar' => 'required|file|mimes:png,jpg,jpeg,svg|max:4000'
+        ]);
+
+        $breadcrumb = (object)[
+            'title' => 'Show File Upload',
+            'list' => ['Home', 'File Upload', 'Show']
+        ];
+
+        $page = (object)[
+            'title' => 'Show File Upload Baru'
+        ];
+
+        $activeMenu = 'fileUpload';
+
+        $namaFile = $request->nama . '.' . $request->gambar->getClientOriginalExtension();
+        $path = $request->gambar->move('gambar', $namaFile);
+        $path = str_replace("\\", "/", $path);
+        $path = asset('gambar/' . $namaFile);
+
+        return view('showImage', [
+            'oldName' => $request->gambar->getClientOriginalName(),
+            'newName' => $namaFile,
+            'path' => $path,
+            'breadcrumb' => $breadcrumb,
+            'page' => $page,
+            'activeMenu' => $activeMenu
+        ]);
+    }
+}
+
 
     // public function prosesFileUpload(Request $request)
     // {
@@ -77,37 +110,3 @@ class FileUploadController extends Controller
     // echo "<br>";
     // echo "Tampilkan link:<a href='$pathBaru'>$pathBaru</a>";
     // }
-
-    public function prosesFileUpload(Request $request)
-    {
-        $request->validate([
-            'nama' => 'required|string',
-            'gambar' => 'required|file|mimes:png,jpg,jpeg,svg|max:4000'
-        ]);
-
-        $breadcrumb = (object)[
-            'title' => 'Show File Upload',
-            'list' => ['Home', 'File Upload', 'Show']
-        ];
-
-        $page = (object)[
-            'title' => 'Show File Upload Baru'
-        ];
-
-        $activeMenu = 'fileUpload';
-
-        $namaFile = $request->nama . '.' . $request->gambar->getClientOriginalExtension();
-        $path = $request->gambar->move('gambar', $namaFile);
-        $path = str_replace("\\", "/", $path);
-        $path = asset('gambar/' . $namaFile);
-
-        return view('showImage', [
-            'oldName' => $request->gambar->getClientOriginalName(),
-            'newName' => $namaFile,
-            'path' => $path,
-            'breadcrumb' => $breadcrumb,
-            'page' => $page,
-            'activeMenu' => $activeMenu
-        ]);
-    }
-}

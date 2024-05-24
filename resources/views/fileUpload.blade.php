@@ -25,7 +25,7 @@
                 @if ($errors->has('upload_error'))
                     <div class="text-danger">{{ $errors->first('upload_error') }}</div>
                 @endif
-                <button type="submit" class="btn btn-primary btn-block">Upload</button>
+                <button type="submit" class="btn btn-primary">Upload</button>
             </form>
         </div>
     </div>
